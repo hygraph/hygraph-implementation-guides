@@ -1,0 +1,8 @@
+query Page($slug: String!) {
+  page(where: { slug: $slug }) {
+    title
+    body {
+      text
+    }
+  }
+}
