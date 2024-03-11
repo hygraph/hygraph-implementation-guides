@@ -1,0 +1,9 @@
+query Pages {
+  pages {
+    title
+    slug
+    body {
+      text
+    }
+  }
+}
