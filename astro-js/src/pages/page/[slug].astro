@@ -1,0 +1,45 @@
+---
+import { GraphQLClient } from "graphql-request";
+import Main from "../../layouts/main.astro";
+
+// Create a new GraphQL client with the Hygraph endpoint
+const client = new GraphQLClient('https://us-east-1-shared-usea1-02.cdn.hygraph.com/content/cltg6frtj07ga08upevb6yqqm/master');
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: "hygraph-works-with-any-framework" } },
+    { params: { slug: "any-framework-will-work" } },
+    { params: { slug: "implementation-guides" } },
+  ];
+}
+
+const { slug } = Astro.params;
+
+// Fetch the data via the GraphQL query
+const { page } = await client.request(
+  `
+	query Page($slug:String!) {
+		page(where: {slug: $slug}) {
+			title
+			body {
+				text
+			}
+		}
+	}`,
+  {
+    slug,
+  }
+);
+---
+
+<!--  Renders the homepage with a title and a page fetched from the Hygraph -->
+<Main title={page.title}>
+  <div class="m-12">
+    <h1 class="text-5xl font-bold mb-4">{page.title}</h1>
+    <p class="text-lg mb-8">{page.body.text}</p>
+
+    <p>
+      <a href="/" class="underline">Back to homepage</a>
+    </p>
+  </div>
+</Main>

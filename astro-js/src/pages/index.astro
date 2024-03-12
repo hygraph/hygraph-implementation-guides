@@ -1,0 +1,49 @@
+---
+import { GraphQLClient } from "graphql-request";
+import Main from "../layouts/main.astro";
+
+// Create a new GraphQL client with the Hygraph endpoint
+const client = new GraphQLClient('https://us-east-1-shared-usea1-02.cdn.hygraph.com/content/cltg6frtj07ga08upevb6yqqm/master');
+
+// Fetch the data via the GraphQL query
+const { pages } = await client.request(`
+  query Pages {
+    pages {
+      title
+      slug
+      body {
+        text
+      }
+    }
+  }`);
+---
+
+<Main title="Hygraph Implementation Guides demo">
+  <div class="m-12">
+    <h1 class="text-5xl font-bold mb-4">Hygraph Implementation Guides demo</h1>
+    <p class="text-lg mb-4">Click the links below to see other pages</p>
+    <ul class="mb-8 list-disc list-inside">
+      {
+        pages.map((page: any) => {
+          return (
+            <li>
+              <a href={`/page/${page.slug}`} class="underline">
+                {page.title}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <p>
+      <a
+        class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 my-6 rounded"
+        href="https://hygraph.com/docs/implementations"
+        target="_blank"
+      >
+        Implementation Docs
+      </a>
+    </p>
+  </div>
+</Main>
