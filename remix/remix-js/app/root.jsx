@@ -1,3 +1,4 @@
+import "./tailwind.css";
 import {
   Links,
   Meta,
@@ -6,7 +7,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import "./tailwind.css";
 
 export function Layout({ children }) {
   return (
