@@ -23,6 +23,6 @@
 			>
 			  Implementation Docs
 			</a>
-		  </p>
+		</p>
 	</div>
 </main>
