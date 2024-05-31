@@ -9,6 +9,14 @@ export const meta = () => {
   ];
 };
 
+interface Page {
+  title: string;
+  slug: string;
+  body: {
+    text: string;
+  };
+}
+
 const getPageBySlug = gql`
   query Page($slug: String!) {
     page(where: { slug: $slug }) {
@@ -20,7 +28,7 @@ const getPageBySlug = gql`
     }
   }
 `;
-export let loader = async ({ params }) => {
+export let loader = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
 
   const hygraph = new GraphQLClient(
@@ -29,13 +37,13 @@ export let loader = async ({ params }) => {
 
   const { page } = await hygraph.request(getPageBySlug, {
     slug
-  });
+  }) as { page: Page }; // Type assertion
 
   return json({ page });
 };
 
 export default function Page() {
-  let data = useLoaderData();
+  let data = useLoaderData() as { page: Page };
 
   return (
     <div className="m-12">
