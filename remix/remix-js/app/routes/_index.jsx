@@ -21,7 +21,7 @@ const getPagesQuery = gql`
 
 export let loader = async () => {
   const hygraph = new GraphQLClient(
-    "https://us-east-1-shared-usea1-02.cdn.hygraph.com/content/cltg6frtj07ga08upevb6yqqm/master"
+    process.env.VITE_HYGRAPH_URL,
   );
 
   const { pages } = await hygraph.request(getPagesQuery);

@@ -32,7 +32,10 @@ export let loader = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
 
   const hygraph = new GraphQLClient(
-    "https://us-east-1-shared-usea1-02.cdn.hygraph.com/content/cltg6frtj07ga08upevb6yqqm/master"
+    process.env.VITE_HYGRAPH_URL as string,
+    {
+      headers: {},
+    }
   );
 
   const { page } = await hygraph.request(getPageBySlug, {
