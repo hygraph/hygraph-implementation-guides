@@ -2,10 +2,9 @@
 import { GraphQLClient } from "graphql-request";
 import Main from "../../layouts/main.astro";
 
-// Create a new GraphQL client with the Hygraph endpoint
-const client = new GraphQLClient(import.meta.env.ASTRO_HYGRAPH_ENDPOINT);
 
-type Page = {
+export async function getStaticPaths() {
+  type Page = {
   page: {
     title: string;
     slug: string;
@@ -14,32 +13,35 @@ type Page = {
     };
   };
 };
-
-export function getStaticPaths() {
-  return [
-    { params: { slug: "hygraph-works-with-any-framework" } },
-    { params: { slug: "any-framework-will-work" } },
-    { params: { slug: "implementation-guides" } },
-  ];
+type Pages = {
+  pages: [Page]
 }
 
-const { slug } = Astro.params;
 
-// Fetch the data via the GraphQL query
-const { page }: Page = await client.request(
-  `
-	query Page($slug:String!) {
-		page(where: {slug: $slug}) {
-			title
-			body {
-				text
-			}
-		}
-	}`,
-  {
-    slug,
-  }
-);
+  // Create a new GraphQL client with the Hygraph endpoint
+  const client = new GraphQLClient('https://us-east-1-shared-usea1-02.cdn.hygraph.com/content/cltg6frtj07ga08upevb6yqqm/master');
+  const { pages }: Pages = await client.request(
+  `query Pages {
+    pages {
+      title
+      slug
+      body {
+        text
+      }
+    }
+  }`);
+
+  const paths = pages.map(page => ({
+    params: { slug: page.slug },
+    props: {
+      page
+    }
+  }))
+  return paths;
+}
+
+const { page } = Astro.props
+
 ---
 
 <!--  Renders the homepage with a title and a page fetched from the Hygraph -->
