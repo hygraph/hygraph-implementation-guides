@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hygraph Implementation Guides demo</title>
+</head>
+<body>
+    <div class="m-12">
+        <h1 class="text-5xl font-bold mb-4">Hygraph Implementation Guides demo</h1>
+        <p class="text-lg mb-4">Click the links below to see other pages</p>
+        <ul class="mb-8 list-disc list-inside">
+            {% for page in pages %}
+                <li>
+                    <a href="/page/{{ page.slug }}" class="underline">{{ page.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    
+        <p>
+          <a
+            class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 my-6 rounded"
+            href="https://hygraph.com/docs/implementations"
+            target="_blank"
+          >
+            Implementation Docs
+          </a>
+        </p>
+      </div>
+    
+</body>
+</html>
