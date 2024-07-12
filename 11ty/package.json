@@ -1,0 +1,19 @@
+{
+  "name": "11ty",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx eleventy --serve",
+    "build": "npx eleventy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "dotenv": "^16.4.5",
+    "graphql-request": "^7.1.0"
+  }
+}
